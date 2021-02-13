@@ -4,7 +4,7 @@ import sys
 
 from bottle import request, response
 from bottle import post, get, put, delete
-from bottle import Bottle, run
+from bottle import Bottle, run, route, debug
 
 import random
 import re
@@ -19,10 +19,10 @@ app = Bottle()
 
 @app.route('/')
 def hello():
-    return "Hello World!"
+    return "<h1>Hello World!<br>/rd<br>/arr</h1>"
 
 @app.route('/rd')
-def hello():
+def rd():
     from json import dumps
     min = 0
     max = 999
@@ -36,9 +36,9 @@ def hello():
 def returnarray():
     from bottle import response
     from json import dumps
-    rv = [{ "id": 1, "name": "Test Item 1" }, { "id": 2, "name": "Test Item 2" }]
+    data = [{ "id": 1, "name": "Test Item 1" }, { "id": 2, "name": "Test Item 2" }]
     response.content_type = 'application/json'
-    return dumps(rv)
+    return dumps(data)
 
 
 @post('/names')
@@ -84,4 +84,4 @@ def creation_handler():
     return json.dumps({'name': name})
 
 
-run(app, host='localhost', port=7000)
+run(app, host='localhost', port=7000, reloader=True, debug=True)
